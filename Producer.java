@@ -6,6 +6,7 @@ public class Producer implements Runnable {
 	private final static Message poisonPill = new Message(Severity.EOF, "");
 	private final BlockingQueue<Message> messages;
 	private String file;
+	private String id;
 	private Severity getSeverity(String line)
 	{
 		Severity s = Severity.NOSEVERITY;
@@ -40,12 +41,16 @@ public class Producer implements Runnable {
 	}
 	
 	
-	public Producer(BlockingQueue<Message> messages, String file)
+	public Producer(String id,BlockingQueue<Message> messages, String file)
 	{
+		this.id = id;
 		this.messages = messages;
 		this.file = file;
 	}
-	
+	public String getId()
+	{
+		return this.id;
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -56,5 +61,9 @@ public class Producer implements Runnable {
 			e.printStackTrace();
 			Thread.currentThread().interrupt();
 		}
+	}
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.id+"[name]";
 	}
 }
